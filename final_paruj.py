@@ -11,7 +11,7 @@ class Customer(Person):
         self.address = address
 
     def place_order(self, item):
-        return DeliveryOrder
+        return DeliveryOrder(self.name, item)
     
 class Driver(Person):
     def __init__(self, name, vehicle):
@@ -32,7 +32,7 @@ class DeliveryOrder:
         return driver
 
     def summary(self):
-        return f"Order Summary:\nItem: {self.items}\nCostumer: {self.costumer.name}\nStatus: {self.status}\nDriver: {self.assign_driver().name}"
+        return f"Order Summary:\nItem: {self.items}\nCostumer: {self.costumer}\nStatus: {self.status}\nDriver: {self.assign_driver(person3).name}"
 
 #main code
 #create 2 customers
@@ -46,14 +46,17 @@ person2.introduce()
 person3.introduce()
 print()
 #each person order an order
-order1 = DeliveryOrder(person1, 'Laptop')
-order2 = DeliveryOrder(person2, 'Headphones')
-order1.summary()
+order1 = person1.place_order('Laptop')
+order2 = person2.place_order('Headphones')
+print(order1.summary())
 print()
-order2.summary()
+print(order2.summary())
 print()
 #driver is assign to dliver the orders
 person3.deliver(order1)
 person3.deliver(order2)
 print()
 #finalize the process
+print('Final Status:')
+print(f'Order for Laptop: {order1.status}')
+print(f'Order for Headphone: {order2.status}')
